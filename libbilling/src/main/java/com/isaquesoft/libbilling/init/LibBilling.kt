@@ -25,6 +25,8 @@ object LibBilling {
     private val sharedPreferences: SharedPreferencesUseCase by inject(SharedPreferencesUseCase::class.java)
     private lateinit var billingClient: BillingClient
 
+    const val PRODUCT_IDS = "PRODUCT_IDS"
+
     fun connectToGooglePlayBilling(context: Context) {
         this.contextRef = WeakReference(context.applicationContext)
         connectToGooglePlayBilling()
@@ -38,7 +40,7 @@ object LibBilling {
 
         val intent =
             Intent(activity, SubscriptionActivity::class.java).apply {
-                putStringArrayListExtra("PRODUCT_IDS", ArrayList(productIds))
+                putStringArrayListExtra(PRODUCT_IDS, ArrayList(productIds))
             }
         if (activity is android.app.Activity) {
             activity.startActivity(intent)

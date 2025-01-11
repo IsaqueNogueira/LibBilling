@@ -20,6 +20,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.queryProductDetails
 import com.google.common.collect.ImmutableList
+import com.isaquesoft.libbilling.init.LibBilling.PRODUCT_IDS
 import com.isaquesoft.libbilling.presentation.model.ProductsSubscription
 import com.isaquesoft.libbilling.presentation.screens.SubscriptionScreen
 import com.isaquesoft.libbilling.presentation.ui.theme.LibBillingTheme
@@ -41,7 +42,7 @@ class SubscriptionActivity : ComponentActivity() {
         private var isCallSignaturePurchasedActivity = false
     }
 
-    private val productIds by lazy { intent.getStringArrayListExtra("productIds") ?: emptyList() }
+    private val productIds by lazy { intent.getStringArrayListExtra(PRODUCT_IDS) ?: emptyList() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +100,7 @@ class SubscriptionActivity : ComponentActivity() {
     }
 
     private suspend fun showProducts() {
+        //    if (productIds.isEmpty()) finish()
         val productList: List<QueryProductDetailsParams.Product> =
             productIds.map {
                 QueryProductDetailsParams.Product
