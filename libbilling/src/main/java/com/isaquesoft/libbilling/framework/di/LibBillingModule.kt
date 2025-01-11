@@ -10,9 +10,10 @@ import org.koin.dsl.module
  * Created by Isaque Nogueira on 11/01/2025
  */
 
-val libBillingModule = module {
-    factory<SharedPreferencesUseCase> { SharedPreferencesRepository(androidContext()) }
-}
+val libBillingModule =
+    module {
+        factory<SharedPreferencesUseCase> { SharedPreferencesRepository(androidContext()) }
+    }
 
 fun loadBillingModule() {
     loadKoinModules(libBillingModule)

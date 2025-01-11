@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id 'maven-publish'
 }
 
 android {
     namespace 'com.isaquesoft.libbilling'
+    compileSdk 35
 
     defaultConfig {
         minSdk 26
@@ -25,6 +27,14 @@ android {
     }
     kotlinOptions {
         jvmTarget = '17'
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.1'
+    }
+
+    buildFeatures {
+        compose true
     }
 }
 
@@ -48,4 +58,15 @@ dependencies {
     api "com.airbnb.android:lottie-compose:6.3.0"
     api "io.insert-koin:koin-android:3.5.0"
     api "com.google.guava:guava:32.1.2-android"
+}
+
+afterEvaluate {
+    android.libraryVariants.each {variant->
+        publishing.publications.create(variant.name, MavenPublication){
+            from components.findByName(variant.name)
+            groupId "com.github.IsaqueNogueira"
+            artifactId "libbilling"
+            version = '0.0.1'
+        }
+    }
 }

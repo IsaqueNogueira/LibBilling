@@ -1,4 +1,4 @@
-package com.isaquesoft.libbilling.ui.theme
+package com.isaquesoft.sample.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

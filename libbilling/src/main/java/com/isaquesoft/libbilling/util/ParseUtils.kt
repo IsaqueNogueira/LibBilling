@@ -18,7 +18,6 @@ fun String.toDoubleCoin(): Double =
         0.0
     }
 
-
 fun parseCurrencyValue(text: String): Double =
     try {
         val cleanValue =

@@ -5,5 +5,6 @@ package com.isaquesoft.libbilling.domain.usecase
  */
 interface SharedPreferencesUseCase {
     fun isUserPremium(): Boolean
+
     fun setUserPremium(value: Boolean)
 }
