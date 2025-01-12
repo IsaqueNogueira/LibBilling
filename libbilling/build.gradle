@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
     id 'maven-publish'
 }
 
@@ -66,7 +67,7 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId "com.github.IsaqueNogueira"
             artifactId "libbilling"
-            version = '0.0.1'
+            version = '1.0.0'
         }
     }
 }

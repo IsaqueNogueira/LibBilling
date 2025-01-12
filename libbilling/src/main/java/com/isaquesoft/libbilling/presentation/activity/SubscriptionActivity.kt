@@ -1,6 +1,7 @@
 package com.isaquesoft.libbilling.presentation.activity
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +21,10 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.queryProductDetails
 import com.google.common.collect.ImmutableList
+import com.isaquesoft.libbilling.init.LibBilling.COLOR
+import com.isaquesoft.libbilling.init.LibBilling.LIST_BENEFIT
 import com.isaquesoft.libbilling.init.LibBilling.PRODUCT_IDS
+import com.isaquesoft.libbilling.presentation.model.Benefit
 import com.isaquesoft.libbilling.presentation.model.ProductsSubscription
 import com.isaquesoft.libbilling.presentation.screens.SubscriptionScreen
 import com.isaquesoft.libbilling.presentation.ui.theme.LibBillingTheme
@@ -43,6 +47,14 @@ class SubscriptionActivity : ComponentActivity() {
     }
 
     private val productIds by lazy { intent.getStringArrayListExtra(PRODUCT_IDS) ?: emptyList() }
+    private val color by lazy { intent.getIntExtra(COLOR, 0) }
+    private val listBenefit by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableArrayListExtra(LIST_BENEFIT, Benefit::class.java) ?: emptyList()
+        } else {
+            intent.getParcelableArrayListExtra(LIST_BENEFIT) ?: emptyList()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +66,8 @@ class SubscriptionActivity : ComponentActivity() {
                 ) {
                     SubscriptionScreen(
                         viewModel = viewModel,
+                        listBenefit = listBenefit,
+                        color = color,
                         itemClick = { productDetails ->
                             launchPurchaseFlow(productDetails)
                         },

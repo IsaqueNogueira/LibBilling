@@ -11,6 +11,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryPurchasesParams
 import com.isaquesoft.libbilling.domain.usecase.SharedPreferencesUseCase
 import com.isaquesoft.libbilling.presentation.activity.SubscriptionActivity
+import com.isaquesoft.libbilling.presentation.model.Benefit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,6 +27,8 @@ object LibBilling {
     private lateinit var billingClient: BillingClient
 
     const val PRODUCT_IDS = "PRODUCT_IDS"
+    const val COLOR = "COLOR"
+    const val LIST_BENEFIT = "LIST_BENEFIT"
 
     fun isUserPremium() = sharedPreferences.isUserPremium()
 
@@ -34,15 +37,42 @@ object LibBilling {
         connectToGooglePlayBilling()
     }
 
+    /**
+     * Abre a tela de assinaturas no aplicativo.
+     *
+     * @param activity O contexto da Activity que será usado para abrir a tela.
+     * @param productIds Uma lista de IDs de produtos disponíveis para assinatura.
+     * @param color (Opcional) Um valor de cor hexadecimal para personalizar a interface.
+     * @param listBenefit (Opcional) Uma lista de benefícios associados à assinatura.
+     *
+     * Exemplo de uso:
+     * ```
+     * openSubscriptionScreen(
+     *     activity = context,
+     *     productIds = listOf("product_1", "product_2"),
+     *     color = 0xFF1976D2.toInt(),
+     *     listBenefit = listOf(
+     *         Benefit(
+     *             title = "Sem anúncios",
+     *             description = "Elimine distrações, otimize sua experiência."
+     *         )
+     *     )
+     * )
+     * ```
+     */
     fun openSubscriptionScreen(
         activity: Context,
         productIds: List<String>,
+        color: Int? = null,
+        listBenefit: List<Benefit> = emptyList(),
     ) {
         if (productIds.isEmpty() || productIds.size != 3) return
 
         val intent =
             Intent(activity, SubscriptionActivity::class.java).apply {
                 putStringArrayListExtra(PRODUCT_IDS, ArrayList(productIds))
+                putParcelableArrayListExtra(LIST_BENEFIT, ArrayList(listBenefit))
+                putExtra(COLOR, color)
             }
         if (activity is android.app.Activity) {
             activity.startActivity(intent)

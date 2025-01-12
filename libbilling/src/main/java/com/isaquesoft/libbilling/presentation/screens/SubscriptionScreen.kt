@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,6 +51,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.android.billingclient.api.ProductDetails
 import com.isaquesoft.libbilling.R
+import com.isaquesoft.libbilling.presentation.model.Benefit
 import com.isaquesoft.libbilling.presentation.model.ProductsSubscription
 import com.isaquesoft.libbilling.presentation.state.ProductsSubscriptionState
 import com.isaquesoft.libbilling.presentation.ui.theme.BlueApp
@@ -70,9 +72,12 @@ import com.isaquesoft.libbilling.util.parseCurrencyValue
 @Composable
 fun SubscriptionScreen(
     viewModel: SubscriptionViewModel,
+    listBenefit: List<Benefit>,
+    color: Int,
     itemClick: (productDetail: ProductDetails) -> Unit = {},
     onFinish: () -> Unit = {},
 ) {
+    val predominantColor = if (color == 0) BlueApp else Color(color)
     val statusBarLight = GrayLight.toArgb()
     val view = LocalView.current
     val isDarkMod = isSystemInDarkTheme()
@@ -91,99 +96,89 @@ fun SubscriptionScreen(
 
     when (val result = state) {
         is ProductsSubscriptionState.ShowProducts -> {
-            Column(
+            LazyColumn(
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .background(GrayLight),
+                contentPadding = PaddingValues(bottom = 20.dp),
             ) {
-                val compostion by rememberLottieComposition(
-                    spec = LottieCompositionSpec.Asset("premium.json"),
-                )
-
-                Box {
-                    Icon(
-                        painter = painterResource(id = R.drawable.x_lib_billing),
-                        contentDescription = "Voltar",
-                        tint = GrayDark,
-                        modifier =
-                            Modifier
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = rememberRipple(bounded = false),
-                                    onClick = {
-                                        onFinish.invoke()
-                                    },
-                                ).align(Alignment.TopEnd)
-                                .padding(16.dp),
+                item {
+                    val composition by rememberLottieComposition(
+                        spec = LottieCompositionSpec.Asset("premium.json"),
                     )
 
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        LottieAnimation(
-                            composition = compostion,
-                            iterations = LottieConstants.IterateForever,
+                    Box {
+                        Icon(
+                            painter = painterResource(id = R.drawable.x_lib_billing),
+                            contentDescription = "Voltar",
+                            tint = GrayDark,
                             modifier =
                                 Modifier
-                                    .width(80.dp)
-                                    .height(80.dp)
-                                    .padding(top = 16.dp),
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = rememberRipple(bounded = false),
+                                        onClick = {
+                                            onFinish.invoke()
+                                        },
+                                    ).align(Alignment.TopEnd)
+                                    .padding(16.dp),
                         )
+
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            LottieAnimation(
+                                composition = composition,
+                                iterations = LottieConstants.IterateForever,
+                                modifier =
+                                    Modifier
+                                        .width(80.dp)
+                                        .height(80.dp)
+                                        .padding(top = 16.dp),
+                            )
+                        }
                     }
                 }
 
-                Text(
-                    text = "Compre o Premium,",
-                    color = BlueApp,
-                    fontSize = 26.sp,
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp),
-                    fontFamily = latoBlack,
-                )
-                Text(
-                    text = "desbloqueie todos os\nrecursos",
-                    color = Color(0xFF343434),
-                    fontSize = 26.sp,
-                    modifier = Modifier.padding(start = 20.dp, end = 16.dp),
-                    fontFamily = latoBlack,
-                )
-
-                Row(
-                    modifier = Modifier.padding(top = 20.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.seal_check_lib_billing),
-                        contentDescription = "Check",
-                        tint = BlueApp,
-                        modifier =
-                            Modifier
-                                .padding(start = 20.dp)
-                                .size(30.dp),
+                item {
+                    Text(
+                        text = "Compre o Premium,",
+                        color = predominantColor,
+                        fontSize = 26.sp,
+                        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp),
+                        fontFamily = latoBlack,
                     )
+                    Text(
+                        text = "desbloqueie todos os\nrecursos",
+                        color = Color(0xFF343434),
+                        fontSize = 26.sp,
+                        modifier = Modifier.padding(start = 20.dp, end = 16.dp),
+                        fontFamily = latoBlack,
+                    )
+                }
 
-                    Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-                        Text(
-                            text = "Sem anúncios",
-                            color = Color(0xFF343434),
-                            fontFamily = latoFontFamily,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 16.sp,
+                if (listBenefit.isEmpty()) {
+                    item {
+                        BenefitItem(
+                            benefit =
+                                Benefit(
+                                    title = "Sem anúncios",
+                                    description = "Elimine distrações, otimize sua experiência:\nAssine agora e liberte-se dos anúncios.",
+                                ),
+                            predominantColor = predominantColor,
                         )
-
-                        Text(
-                            text = "Elimine distrações, otimize sua experiência:\nAssine agora e liberte-se dos anúncios.",
-                            textAlign = TextAlign.Start,
-                            color = GrayDark,
-                            lineHeight = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp,
-                        )
+                    }
+                } else {
+                    items(listBenefit) { benefit ->
+                        BenefitItem(benefit, predominantColor)
                     }
                 }
 
-                HorizontalItemList(result.products, itemClick = itemClick)
+                item {
+                    HorizontalItemList(result.products, itemClick = itemClick, predominantColor)
+                }
             }
         }
 
@@ -192,9 +187,50 @@ fun SubscriptionScreen(
 }
 
 @Composable
+fun BenefitItem(
+    benefit: Benefit,
+    predominantColor: Color,
+) {
+    Row(
+        modifier = Modifier.padding(top = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.seal_check_lib_billing),
+            contentDescription = "Check",
+            tint = predominantColor,
+            modifier =
+                Modifier
+                    .padding(start = 20.dp)
+                    .size(30.dp),
+        )
+
+        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+            Text(
+                text = benefit.title,
+                color = Color(0xFF343434),
+                fontFamily = latoFontFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+
+            Text(
+                text = benefit.description,
+                textAlign = TextAlign.Start,
+                color = GrayDark,
+                lineHeight = 16.sp,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+            )
+        }
+    }
+}
+
+@Composable
 fun HorizontalItemList(
     list: List<ProductsSubscription> = emptyList(),
     itemClick: (productDetail: ProductDetails) -> Unit = {},
+    predominantColor: Color,
 ) {
     val productsSubscription = list.sortedBy { parseCurrencyValue(it.value ?: "") }
 
@@ -221,7 +257,7 @@ fun HorizontalItemList(
 
             Card(
                 shape = RoundedCornerShape(6.dp),
-                border = BorderStroke(1.dp, if (isSelected) BlueApp else GrayDark),
+                border = BorderStroke(1.dp, if (isSelected) predominantColor else GrayDark),
                 colors =
                     CardDefaults.cardColors(
                         Color.White,
@@ -282,7 +318,7 @@ fun HorizontalItemList(
             Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, top = 40.dp),
-        colors = ButtonDefaults.buttonColors(BlueApp),
+        colors = ButtonDefaults.buttonColors(predominantColor),
     ) {
         Text(text = "Assinar", color = Color.White)
     }
