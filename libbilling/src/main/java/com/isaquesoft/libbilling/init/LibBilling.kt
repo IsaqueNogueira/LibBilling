@@ -27,7 +27,9 @@ object LibBilling {
 
     const val PRODUCT_IDS = "PRODUCT_IDS"
 
-    fun connectToGooglePlayBilling(context: Context) {
+    fun isUserPremium() = sharedPreferences.isUserPremium()
+
+    fun startConnectionBillingClient(context: Context) {
         this.contextRef = WeakReference(context.applicationContext)
         connectToGooglePlayBilling()
     }
@@ -50,7 +52,7 @@ object LibBilling {
         }
     }
 
-    fun onStop() {
+    fun endConnectionBillingClient() {
         billingClient.endConnection()
     }
 
