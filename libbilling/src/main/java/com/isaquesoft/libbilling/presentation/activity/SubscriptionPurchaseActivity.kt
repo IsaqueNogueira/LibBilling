@@ -13,7 +13,7 @@ import com.isaquesoft.libbilling.presentation.screens.SubscriptionPurchaseScreen
 import com.isaquesoft.libbilling.presentation.ui.theme.LibBillingTheme
 
 /**
- * Created by Isaque Nogueira on 02/11/2024
+ * Created by Isaque Nogueira on 11/01/2025
  */
 class SubscriptionPurchaseActivity : ComponentActivity() {
     private val onBackPressedCallback: OnBackPressedCallback =

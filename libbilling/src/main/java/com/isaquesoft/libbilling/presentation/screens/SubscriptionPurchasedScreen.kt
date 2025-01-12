@@ -41,7 +41,7 @@ import com.isaquesoft.libbilling.presentation.ui.theme.TextBlack
 import com.isaquesoft.libbilling.presentation.ui.theme.TextGray
 
 /**
- * Created by Isaque Nogueira on 02/11/2024
+ * Created by Isaque Nogueira on 11/01/2025
  */
 @Composable
 fun SubscriptionPurchaseScreen(

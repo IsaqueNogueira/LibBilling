@@ -64,7 +64,7 @@ import com.isaquesoft.libbilling.util.getSubscriptionDuration
 import com.isaquesoft.libbilling.util.parseCurrencyValue
 
 /**
- * Created by Isaque Nogueira on 18/10/2024
+ * Created by Isaque Nogueira on 11/01/2025
  */
 
 @Composable

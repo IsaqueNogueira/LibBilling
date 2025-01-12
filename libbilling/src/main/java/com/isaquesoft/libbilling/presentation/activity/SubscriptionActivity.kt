@@ -31,7 +31,7 @@ import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
- * Created by Isaque Nogueira on 18/10/2024
+ * Created by Isaque Nogueira on 11/01/2025
  */
 class SubscriptionActivity : ComponentActivity() {
     private lateinit var billingClient: BillingClient
