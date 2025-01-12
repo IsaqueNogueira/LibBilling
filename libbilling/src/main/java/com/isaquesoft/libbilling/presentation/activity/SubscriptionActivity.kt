@@ -100,7 +100,6 @@ class SubscriptionActivity : ComponentActivity() {
     }
 
     private suspend fun showProducts() {
-        //    if (productIds.isEmpty()) finish()
         val productList: List<QueryProductDetailsParams.Product> =
             productIds.map {
                 QueryProductDetailsParams.Product
