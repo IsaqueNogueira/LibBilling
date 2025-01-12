@@ -4,6 +4,10 @@
 
 ---
 
+<img src="https://github.com/user-attachments/assets/5e9d44ef-8f2f-4191-84c3-a553f7c5bc0d" width="300">
+
+
+
 ## **Funcionalidades**
 
 - Conexão com o Google Play Billing.
