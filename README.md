@@ -21,7 +21,12 @@
    implementation 'com.isaquesoft:libbilling:Tag'
    ```
 
-2. **Sincronize o projeto** para baixar as dependências.
+   use o
+    ```groovy
+     maven { url = uri("https://jitpack.io") }
+    ```
+
+3. **Sincronize o projeto** para baixar as dependências.
 
 ---
 
