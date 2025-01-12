@@ -33,6 +33,7 @@ fun parseCurrencyValue(text: String): Double =
 fun getSubscriptionDuration(namePlano: String): Int =
     when {
         namePlano.contains("mensal", ignoreCase = true) -> 1
+        namePlano.contains("trimestral", ignoreCase = true) -> 3
         namePlano.contains("semestral", ignoreCase = true) -> 6
         namePlano.contains("anual", ignoreCase = true) -> 12
         else -> 0
