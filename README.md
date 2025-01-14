@@ -22,7 +22,7 @@
 1. **Adicione a dependência no arquivo `build.gradle`:**
 
    ```groovy
-   implementation 'com.isaquesoft:libbilling:Tag'
+   implementation 'com.github.IsaqueNogueira:libbilling:Tag'
    ```
 
    use o
