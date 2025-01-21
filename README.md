@@ -87,14 +87,6 @@ LibBilling.openSubscriptionScreen(
 )
 ```
 
-### **4. Encerrar a Conexão com o Billing Client**
-
-Quando o Billing Client não for mais necessário, é recomendável encerrar a conexão:
-
-```kotlin
-LibBilling.endConnectionBillingClient()
-```
-
 ---
 
 ## **Exemplo Completo**
