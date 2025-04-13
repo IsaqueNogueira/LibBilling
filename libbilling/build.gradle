@@ -10,7 +10,7 @@ android {
     compileSdk 35
 
     defaultConfig {
-        minSdk 26
+        minSdk 23
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -67,7 +67,7 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId "com.github.IsaqueNogueira"
             artifactId "libbilling"
-            version = '1.0.0'
+            version = '1.0.1'
         }
     }
 }
