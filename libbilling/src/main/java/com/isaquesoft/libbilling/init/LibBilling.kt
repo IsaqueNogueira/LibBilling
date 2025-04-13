@@ -32,6 +32,8 @@ object LibBilling {
 
     fun isUserPremium() = sharedPreferences.isUserPremium()
 
+    fun setUserPremium(value: Boolean) = sharedPreferences.setUserPremium(value)
+
     fun startConnectionBillingClient(context: Context) {
         this.contextRef = WeakReference(context.applicationContext)
         connectToGooglePlayBilling()
