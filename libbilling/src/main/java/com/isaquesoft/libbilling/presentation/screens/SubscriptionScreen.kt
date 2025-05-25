@@ -257,7 +257,7 @@ fun HorizontalItemList(
 
             Card(
                 shape = RoundedCornerShape(6.dp),
-                border = BorderStroke(1.dp, if (isSelected) predominantColor else GrayDark),
+                border = BorderStroke(2.dp, if (isSelected) predominantColor else GrayDark),
                 colors =
                     CardDefaults.cardColors(
                         Color.White,
