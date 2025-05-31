@@ -67,7 +67,7 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId "com.github.IsaqueNogueira"
             artifactId "libbilling"
-            version = '1.0.4'
+            version = '1.0.5'
         }
     }
 }
